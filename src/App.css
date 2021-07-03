@@ -1,38 +1,173 @@
-.App {
-  text-align: center;
+.srOnly { position: absolute; width: 1px; height: 1px; margin: -1px; border: 0; padding: 0; white-space: nowrap; clip-path: inset(100%); clip: rect(0 0 0 0); overflow: hidden;}
+
+img {
+    max-width: 100%;
 }
 
-.App-logo {
-  height: 40vmin;
-  pointer-events: none;
+ul {
+    list-style-type: none;
+    padding-left: 10px;
 }
 
-@media (prefers-reduced-motion: no-preference) {
-  .App-logo {
-    animation: App-logo-spin infinite 20s linear;
-  }
+.individualPlayerStats li {
+    width: max-content;
 }
 
-.App-header {
-  background-color: #282c34;
-  min-height: 100vh;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  font-size: calc(10px + 2vmin);
-  color: white;
+.statsPanel {
+    display: flex;
+    justify-content: space-between;
 }
 
-.App-link {
-  color: #61dafb;
+.playerButtonListBox {
+    height: 48vh;
+    overflow-y: scroll;
 }
 
-@keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
+.diamond,
+.diamondModal {
+    position: relative;
+    max-width: 300px;
 }
+
+.diamond {
+    margin: 0 auto;
+}
+
+.pos {
+    position: absolute;
+}
+.rightfield {
+    top: 70px;
+    right: 60px;
+}
+
+.centerfield {
+    top: 40px;
+    right: 145px;
+}
+
+.leftfield {
+    top: 70px;
+    left: 60px;
+}
+
+.secondbase {
+    top: 100px;
+    right: 110px;
+}
+
+.pitcher {
+    bottom: 70px;
+    right: 145px;   
+}
+
+.catcher {
+    bottom: 0px;
+    right: 145px;    
+}
+
+.firstbase {
+    bottom: 100px;
+    right: 85px;
+}
+
+.thirdbase {
+    bottom: 100px;
+    left: 85px;   
+}
+
+.shortstop {
+    top: 100px;
+    left: 110px;
+}
+
+.yellow, .blue, .orange, .red {
+    border-radius: 10px;
+    width: 40px;
+    text-align: center;
+}
+
+.blue {
+    background-color: blue;
+    color: white;
+}
+
+.yellow {
+    background-color: yellow;
+}
+
+.orange {
+    background-color: orange;
+}
+
+.red {
+    background-color: red;
+    color: white;
+}
+
+/* Scorekeeper */
+
+.score {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    grid-template-rows: repeat(2, 1fr);
+    grid-column-gap: 0px;
+    grid-row-gap: 0px; 
+    text-align: center;
+}
+
+.yourTeam { 
+    grid-area: 1 / 1 / 3 / 2;
+}
+.otherTeam { 
+    grid-area: 1 / 4 / 3 / 5; 
+} 
+
+.scoreFrame {
+    border: 2px solid black;
+    border-radius: 6px;
+}
+
+.scoreFrame button {
+    height: 40px;
+    width: 40px;
+    font-size: 0.7rem;
+}
+
+.modalGrid {
+    display: grid;
+    grid-template-columns: 1fr;
+    grid-template-rows: 0.6fr 0.2fr 0.1fr;
+    grid-column-gap: 0px;
+    grid-row-gap: 0px; 
+}
+.diamondModal {
+    position: relative;
+    min-width: 300px;
+    margin: 0 auto;
+    grid-area: 1 / 1 / 2 / 2;
+}
+.scoreScreen {
+    width: 30px;
+    height: 30px;
+    color: white;
+    background-color: black;
+    border: 3px solid yellow;
+    border-radius: 20px;
+}
+.scoreScreen:active {
+    background-color: dodgerblue;
+}
+.resultsModal {
+    grid-area: 2 / 1 / 3 / 2;
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    grid-template-rows: repeat(3, 1fr);
+    align-items: center;
+}
+
+.emptyModal {
+    grid-area: 3 / 1 / 4 / 2;
+    text-align: center;
+}
+
