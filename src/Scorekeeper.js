@@ -244,15 +244,15 @@ export default function Scorekeeper() {
                 <div className="modalGrid">
                     <div className="diamondModal">
                         <img src={diamond} alt="A baseball diamond." />
-                        <button className="pos pitcher scoreScreen" onClick={() => setLocation("1")}>1</button>
-                        <button className="pos catcher scoreScreen" onClick={() => setLocation("2")}>2</button>
-                        <button className="pos firstbase scoreScreen" onClick={() => setLocation("3")}>3</button>
-                        <button className="pos secondbase scoreScreen" onClick={() => setLocation("4")}>4</button>
-                        <button className="pos thirdbase scoreScreen" onClick={() => setLocation("5")}>5</button>
-                        <button className="pos shortstop scoreScreen" onClick={() => setLocation("6")}>6</button>
-                        <button className="pos leftfield scoreScreen" onClick={() => setLocation("7")}>7</button>
-                        <button className="pos centerfield scoreScreen" onClick={() => setLocation("8")}>8</button>
-                        <button className="pos rightfield scoreScreen" onClick={() => setLocation("9")}>9</button>
+                        <button className="pos pitcher scoreScreen" onClick={() => setLocation("1")}>P</button>
+                        <button className="pos catcher scoreScreen" onClick={() => setLocation("2")}>C</button>
+                        <button className="pos firstbase scoreScreen" onClick={() => setLocation("3")}>1B</button>
+                        <button className="pos secondbase scoreScreen" onClick={() => setLocation("4")}>2B</button>
+                        <button className="pos thirdbase scoreScreen" onClick={() => setLocation("5")}>3B</button>
+                        <button className="pos shortstop scoreScreen" onClick={() => setLocation("6")}>SS</button>
+                        <button className="pos leftfield scoreScreen" onClick={() => setLocation("7")}>LF</button>
+                        <button className="pos centerfield scoreScreen" onClick={() => setLocation("8")}>CF</button>
+                        <button className="pos rightfield scoreScreen" onClick={() => setLocation("9")}>RF</button>
                     </div>
                     <div className="resultsModal">
                     <Button variant="primary m-1" onClick={() => setResult("1B")}>
