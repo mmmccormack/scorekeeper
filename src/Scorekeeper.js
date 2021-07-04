@@ -8,7 +8,7 @@ import diamond from './assets/fulldiamond.gif';
 
 export default function Scorekeeper() {
 
-    const [array, setArray] = useState(["playerName",0,"1B - 7",0,0,0,0,0,0,0]);
+    const [array, setArray] = useState(["playerName",0,0,0,0,0,0,0,0,0]);
     const columnNumber = 10;
     const [rowNumber, setRowNumber] = useState(1);
     const [teamRoster, setTeamRoster] = useState([]);
@@ -96,6 +96,10 @@ export default function Scorekeeper() {
         const dbRef = firebase.database().ref(`users/${uid}/${batter}`);
         const update = {};
         dbRef.on(`value`, response => {
+            if (previousLocation[1] === " R") {
+                update.runs = Number(response.val().runs) - 1;
+                setGameRuns(gameRuns - 1);
+            }
         // update any affected fields
         // DRAW RESULT AND FUNCTION AS ARGUMENTS INTO THE FUNCTION
             if (previousResult[0] === "1B" || previousResult[0] === "2B" || previousResult[0] === "3B" || previousResult[0] === "HR") {
@@ -133,10 +137,6 @@ export default function Scorekeeper() {
                 } else {
                     update.outs = Number(response.val().outs) - 1;
                 }
-            }
-            if (previousResult[1] === "R") {
-                update.runs = Number(response.val().runs) - 1;
-                setGameRuns(gameRuns - 1);
             }
             if (previousResult[1] === "OUT") {
                 update.outs = Number(response.val().outs) - 1;
