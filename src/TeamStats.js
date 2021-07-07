@@ -69,7 +69,6 @@ export default function TeamStats() {
             playerStats.push(player.stats[stat])
           }
         }
-        console.log(playerStats);
         
         displayFrequencyColors(playerStats);
         setPlayerStatList(playerStats);
