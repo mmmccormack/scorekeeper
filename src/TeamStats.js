@@ -31,6 +31,10 @@ export default function TeamStats() {
           // call this function to update out component's state to be the new value
           setTeamStatList(playerRoster);
         })
+
+        return () => {
+          dbRef.off();
+        }
       }, [])
 
       const displayFrequencyColors = (stats) => {
@@ -52,17 +56,26 @@ export default function TeamStats() {
       const displayPlayerStats = (player) => {
         const playerStats = [];
         playerStats.push(player.key)
+        let totalAreasOnField = 0;
         for (let stat in player.stats) {
           if (stat.length === 1) {
-            playerStats.push(Math.floor((player.stats[stat] / player.stats.atbats) * 100))
+            totalAreasOnField = totalAreasOnField + Number(player.stats[stat]);
+          }
+        }
+        for (let stat in player.stats) {
+          if (stat.length === 1) {
+            playerStats.push(Math.floor((player.stats[stat] / totalAreasOnField) * 100))
           } else {
             playerStats.push(player.stats[stat])
           }
         }
+        console.log(playerStats);
         
         displayFrequencyColors(playerStats);
         setPlayerStatList(playerStats);
       }
+
+
 
     return (
       <>
@@ -89,26 +102,26 @@ export default function TeamStats() {
               <li>HR: {playerStatList[14]}</li>
               <li>BB: {playerStatList[24]}</li>
               <li>SO: {playerStatList[22]}</li>
-              <li>AVG: {playerStatList[11]}</li>
-              <li>OBP: {playerStatList[15]}</li>
-              <li>SLG: {playerStatList[21]}</li>
-              <li>OPS: {playerStatList[16]}</li>
+              <li>AVG: {isNaN(playerStatList[11]) ? "0.000" : playerStatList[11]}</li>
+              <li>OBP: {isNaN(playerStatList[15]) ? "0.000" : playerStatList[15]}</li>
+              <li>SLG: {isNaN(playerStatList[21]) ? "0.000" : playerStatList[21]}</li>
+              <li>OPS: {isNaN(Number(playerStatList[15]) + Number(playerStatList[21])) ? "0.000" : (Number(playerStatList[15]) + Number(playerStatList[21])).toFixed(3)}</li>
             </ul>
           </div>
         </div>
-          <div className="diamond">
-            <img src={diamond} alt="A baseball diamond." />
-            <div className={`pos pitcher ${playerHitFreq[0]}`}>{isNaN(playerStatList[1]) ? null : `${playerStatList[1]}%`}</div>
-            <div className={`pos catcher ${playerHitFreq[1]}`}>{isNaN(playerStatList[2]) ? null : `${playerStatList[2]}%`}</div>
-            <div className={`pos firstbase ${playerHitFreq[2]}`}>{isNaN(playerStatList[3]) ? null : `${playerStatList[3]}%`}</div>
-            <div className={`pos secondbase ${playerHitFreq[3]}`}>{isNaN(playerStatList[4]) ? null : `${playerStatList[4]}%`}</div>
-            <div className={`pos thirdbase ${playerHitFreq[4]}`}>{isNaN(playerStatList[5]) ? null : `${playerStatList[5]}%`}</div>
-            <div className={`pos shortstop ${playerHitFreq[5]}`}>{isNaN(playerStatList[6]) ? null : `${playerStatList[6]}%`}</div>
-            <div className={`pos leftfield ${playerHitFreq[6]}`}>{isNaN(playerStatList[7]) ? null : `${playerStatList[7]}%`}</div>
-            <div className={`pos centerfield ${playerHitFreq[7]}`}>{isNaN(playerStatList[8]) ? null : `${playerStatList[8]}%`}</div>
-            <div className={`pos rightfield ${playerHitFreq[8]}`}>{isNaN(playerStatList[9]) ? null : `${playerStatList[9]}%`}</div>
-          </div>
-          <Link to="/" className="btn btn-warning w-100 mt-3 mb-3">Back to Main</Link>
+        <div className="diamond">
+          <img src={diamond} alt="A baseball diamond." />
+          <div className={`pos pitcher ${playerHitFreq[0]}`}>{isNaN(playerStatList[1]) ? null : `${playerStatList[1]}%`}</div>
+          <div className={`pos catcher ${playerHitFreq[1]}`}>{isNaN(playerStatList[2]) ? null : `${playerStatList[2]}%`}</div>
+          <div className={`pos firstbase ${playerHitFreq[2]}`}>{isNaN(playerStatList[3]) ? null : `${playerStatList[3]}%`}</div>
+          <div className={`pos secondbase ${playerHitFreq[3]}`}>{isNaN(playerStatList[4]) ? null : `${playerStatList[4]}%`}</div>
+          <div className={`pos thirdbase ${playerHitFreq[4]}`}>{isNaN(playerStatList[5]) ? null : `${playerStatList[5]}%`}</div>
+          <div className={`pos shortstop ${playerHitFreq[5]}`}>{isNaN(playerStatList[6]) ? null : `${playerStatList[6]}%`}</div>
+          <div className={`pos leftfield ${playerHitFreq[6]}`}>{isNaN(playerStatList[7]) ? null : `${playerStatList[7]}%`}</div>
+          <div className={`pos centerfield ${playerHitFreq[7]}`}>{isNaN(playerStatList[8]) ? null : `${playerStatList[8]}%`}</div>
+          <div className={`pos rightfield ${playerHitFreq[8]}`}>{isNaN(playerStatList[9]) ? null : `${playerStatList[9]}%`}</div>
+        </div>
+        <Link to="/" className="btn btn-warning w-100 mt-3 mb-3">Back to Main</Link>
       </>
     )
 }

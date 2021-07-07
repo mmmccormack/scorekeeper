@@ -1,4 +1,4 @@
-import React, { useRef, useState } from 'react';
+import React, { useRef, useState, useEffect } from 'react';
 import { Card, Form, Button, Alert } from 'react-bootstrap';
 import { useAuth } from  './AuthContext';
 import { Link, useHistory } from 'react-router-dom';
@@ -10,6 +10,7 @@ export default function Dashboard() {
     const [message, setMessage] = useState('');
     const { currentUser, logout } = useAuth();
     const history = useHistory();
+    const [playerList, setPlayerList] = useState([]);
 
     async function handleLogout() {
         setError('');
@@ -33,13 +34,6 @@ export default function Dashboard() {
     function addPlayer() {
         const playerName = titleCase(nameRef.current.value);
         const uid = firebase.auth().currentUser.uid;
-        const dbRef = firebase.database().ref(`users/${uid}`);
-        const playerList = []
-        dbRef.on(`value`, response => {
-            for (let player in response.val()) {
-                playerList.push(player)
-            }
-        });
         if (playerList.includes(playerName)) {
             setError('Name already exists in roster!');
             setMessage('');
@@ -81,13 +75,6 @@ export default function Dashboard() {
     const removePlayer = () => {
         const playerName = titleCase(nameRef.current.value)
         const uid = firebase.auth().currentUser.uid;
-        const dbRef = firebase.database().ref(`users/${uid}`);
-        const playerList = []
-        dbRef.on(`value`, response => {
-            for (let player in response.val()) {
-                playerList.push(player)
-            }
-        });
         if (playerList.includes(playerName)) {
             firebase.database().ref(`users/${uid}/${playerName}`).remove();
             setMessage('Player removed from roster!');
@@ -97,6 +84,21 @@ export default function Dashboard() {
             setMessage('');
         }
     }
+    // useEffect adds player roster to state for checks to add or remove players
+    useEffect(() => {
+        const uid = firebase.auth().currentUser.uid;
+        const dbRef = firebase.database().ref(`users/${uid}`);
+        const playerListPull = []
+        dbRef.on(`value`, response => {
+            for (let player in response.val()) {
+                playerListPull.push(player)
+            }
+        });
+        setPlayerList(playerListPull);
+        return () => {
+            dbRef.off();
+        }
+    }, [])
 
     return (
         <>
