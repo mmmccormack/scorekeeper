@@ -110,7 +110,6 @@ export default function Scorekeeper() {
             </div>
             <div 
             style={gridObj}
-            className="row"
             >
                 {
                     array.map( (frame, index) => {
