@@ -49,7 +49,7 @@ export default function Scorekeeper() {
         display: `grid`,
         gridTemplateColumns: `repeat(${columnNumber}, 1fr)`,
         gridTemplateRows: `repeat(${rowNumber}, 1fr)`,
-        alignItems: `center`
+        alignItems: `center`,
     }
     
     const addRow = () => {
@@ -149,7 +149,7 @@ export default function Scorekeeper() {
                                     backgroundImage: `url(${smallDiamond})`, 
                                     backgroundRepeat: `no-repeat`,
                                     backgroundPosition: `center`}}
-                                className="btn btn-success w-100 p-0" 
+                                className="btn btn-success p-0" 
                                 onClick={() => showCell(index)}
                                 >
                                 {cellValue}
