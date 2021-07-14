@@ -1,14 +1,24 @@
 import React, { useState, useEffect } from 'react';
 import firebase from './firebase';
 import diamond from './assets/fulldiamond.gif';
-import { Link } from 'react-router-dom';
+import { useHistory, useLocation } from 'react-router-dom';
 
 export default function TeamStats() {
 
+  const history = useHistory();
+  const location = useLocation();
   const [teamStatList, setTeamStatList] = useState([]);
   const [playerStatList, setPlayerStatList] = useState([]);
   const [playerHitFreq, setPlayerHitFreq] = useState([]);
-  
+  const loadValue = location.state === undefined ? ["playerName",0,0,0,0,0,0,0,0,0] : location.state.detail
+  // setting state for array that will hold values for game in progress
+
+  const backToMain = () => {
+    history.push({
+        pathname: '/',
+        state: { detail: loadValue }
+    })
+}
 
     // this useEffect is added for establishing a connection to the firebase database anytime the user opens the app or makes changes to the database
     useEffect( () => {
@@ -120,7 +130,7 @@ export default function TeamStats() {
           <div className={`pos centerfield ${playerHitFreq[7]}`}>{isNaN(playerStatList[8]) ? null : `${playerStatList[8]}%`}</div>
           <div className={`pos rightfield ${playerHitFreq[8]}`}>{isNaN(playerStatList[9]) ? null : `${playerStatList[9]}%`}</div>
         </div>
-        <Link to="/" className="btn btn-warning w-100 mt-3 mb-3">Back to Main</Link>
+        <button className="btn btn-warning w-100 mt-2" onClick={() => backToMain()}>Back to Main</button>
       </>
     )
 }
