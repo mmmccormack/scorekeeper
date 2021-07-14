@@ -1,7 +1,7 @@
 import React, { useRef, useState, useEffect } from 'react';
-import { Card, Form, Button, Alert } from 'react-bootstrap';
+import { Card, Form, Button, Alert, Modal } from 'react-bootstrap';
 import { useAuth } from  './AuthContext';
-import { Link, useHistory } from 'react-router-dom';
+import { Link, useHistory, useLocation } from 'react-router-dom';
 import firebase from './firebase';
 
 export default function Dashboard() {
@@ -10,7 +10,20 @@ export default function Dashboard() {
     const [message, setMessage] = useState('');
     const { currentUser, logout } = useAuth();
     const history = useHistory();
+    const location = useLocation();
     const [playerList, setPlayerList] = useState([]);
+    const loadValue = location.state === undefined ? ["playerName",0,0,0,0,0,0,0,0,0] : location.state.detail
+    // setting state for showing the modal for starting a new scoresheet
+    const [show, setShow] = useState(false)
+    const closeModal = () => setShow(false);
+    const showModal = () => setShow(true);
+
+    const changeScreen = (path, arrayToBePassed) => {
+        history.push({
+            pathname: `/${path}`,
+            state: { detail: arrayToBePassed }
+        });
+    }
 
     async function handleLogout() {
         setError('');
@@ -84,6 +97,7 @@ export default function Dashboard() {
             setMessage('');
         }
     }
+
     // useEffect adds player roster to state for checks to add or remove players
     useEffect(() => {
         const uid = firebase.auth().currentUser.uid;
@@ -102,6 +116,22 @@ export default function Dashboard() {
 
     return (
         <>
+            <Modal show={show} onHide={closeModal}>
+            <Modal.Header>
+                <Modal.Title>Score Game</Modal.Title>
+            </Modal.Header>
+            <Modal.Body className="mx-auto">
+                <p>Do you want to start scoring a new game or continue scoring the existing one?</p>
+            </Modal.Body>
+            <Modal.Footer className="mx-auto">
+                <Button variant="danger" onClick={() => changeScreen('scorekeeper', ["playerName",0,0,0,0,0,0,0,0,0])}>
+                Start New Game
+                </Button> 
+            <Button variant="info" onClick={() => changeScreen('scorekeeper', loadValue)}>
+                Continue Game
+            </Button>
+            </Modal.Footer>
+        </Modal>
             <Card>
                 <Card.Body>
                     <h2 className="text-center mb-4">Profile</h2>
@@ -116,9 +146,9 @@ export default function Dashboard() {
                         <Button className="btn btn-danger w-50" onClick={() => { removePlayer(nameRef) }}>Remove Player</Button>
                         {error && <Alert variant="danger">{error}</Alert>}
                         {message && <Alert variant="success">{message}</Alert>}
-                        <Link to="/team-stats" className="btn btn-info w-100 mt-3">Team Stats</Link>
+                        <button onClick={() => changeScreen('team-stats', loadValue)} className="btn btn-info w-100 mt-3">Team Stats</button>
                     </Form>
-                    <Link to="/scorekeeper" className="btn btn-warning w-100 mt-3">Score Game</Link>
+                    <Button className="btn btn-warning w-100 mt-3" onClick={() => { showModal()}}>Score Game</Button>
 
                 </Card.Body>
 

@@ -1,17 +1,26 @@
 import React, { useState, useEffect } from 'react';
-import { Link } from "react-router-dom";
+import { useLocation, useHistory } from "react-router-dom";
 import firebase from './firebase';
 import smallDiamond from './assets/smallDiamond.svg';
 import ScoringModal from './ScoringModal';
 
 
 export default function Scorekeeper() {
-
-    const [array, setArray] = useState(["playerName",0,0,0,0,0,0,0,0,0]);
+    const location = useLocation();
+    const history = useHistory();
+    const [array, setArray] = useState(location.state.detail);
     const columnNumber = 10;
     const [rowNumber, setRowNumber] = useState(1);
     const [teamRoster, setTeamRoster] = useState([]);
     const [gameRuns, setGameRuns] = useState(0);
+
+    const backToMain = () => {
+        history.push({
+            pathname: '/',
+            state: { detail: array }
+        })
+    }
+
 
     // modal functionality
     const [show, setShow] = useState(false);
@@ -123,7 +132,8 @@ export default function Scorekeeper() {
                             {
                             index % 10 === 0 ?
 
-                            <select 
+                            <select
+                                value={frame}
                                 name="playerName" 
                                 id="playerName"
                                 key={index}
@@ -161,7 +171,7 @@ export default function Scorekeeper() {
                 }
             </div>
             <button onClick={addRow} className="btn btn-success w-100 mt-3">Add row</button>
-            <Link to="/" className="btn btn-warning w-100 mt-3 mb-3">Back to Main</Link>
+            <button onClick={backToMain} className="btn btn-warning w-100 mt-3 mb-3">Back to Main</button>
         </>
     )
 }
