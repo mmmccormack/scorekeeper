@@ -12,16 +12,20 @@ export default function Dashboard() {
     const history = useHistory();
     const location = useLocation();
     const [playerList, setPlayerList] = useState([]);
-    const loadValue = location.state === undefined ? ["playerName",0,0,0,0,0,0,0,0,0] : location.state.detail
+    const loadValue = location.state === undefined ? ["playerName",0,0,0,0,0,0,0,0,0] : location.state.detail;
+    const loadScore = location.state === undefined ? 0 : location.state.score;
     // setting state for showing the modal for starting a new scoresheet
-    const [show, setShow] = useState(false)
+    const [show, setShow] = useState(false);
     const closeModal = () => setShow(false);
     const showModal = () => setShow(true);
 
-    const changeScreen = (path, arrayToBePassed) => {
+    const changeScreen = (path, arrayToBePassed, score) => {
         history.push({
             pathname: `/${path}`,
-            state: { detail: arrayToBePassed }
+            state: { 
+                detail: arrayToBePassed,
+                score: loadScore
+             }
         });
     }
 
@@ -124,10 +128,10 @@ export default function Dashboard() {
                 <p>Do you want to start scoring a new game or continue scoring the existing one?</p>
             </Modal.Body>
             <Modal.Footer className="mx-auto">
-                <Button variant="danger" onClick={() => changeScreen('scorekeeper', ["playerName",0,0,0,0,0,0,0,0,0])}>
+                <Button variant="danger" onClick={() => changeScreen('scorekeeper', ["playerName",0,0,0,0,0,0,0,0,0], 0)}>
                 Start New Game
                 </Button> 
-            <Button variant="info" onClick={() => changeScreen('scorekeeper', loadValue)}>
+            <Button variant="info" onClick={() => changeScreen('scorekeeper', loadValue, loadScore)}>
                 Continue Game
             </Button>
             </Modal.Footer>
@@ -146,7 +150,7 @@ export default function Dashboard() {
                         <Button className="btn btn-danger w-50" onClick={() => { removePlayer(nameRef) }}>Remove Player</Button>
                         {error && <Alert variant="danger">{error}</Alert>}
                         {message && <Alert variant="success">{message}</Alert>}
-                        <button onClick={() => changeScreen('team-stats', loadValue)} className="btn btn-info w-100 mt-3">Team Stats</button>
+                        <button onClick={() => changeScreen('team-stats', loadValue, loadScore)} className="btn btn-info w-100 mt-3">Team Stats</button>
                     </Form>
                     <Button className="btn btn-warning w-100 mt-3" onClick={() => { showModal()}}>Score Game</Button>
 

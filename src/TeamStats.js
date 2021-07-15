@@ -11,12 +11,15 @@ export default function TeamStats() {
   const [playerStatList, setPlayerStatList] = useState([]);
   const [playerHitFreq, setPlayerHitFreq] = useState([]);
   const loadValue = location.state === undefined ? ["playerName",0,0,0,0,0,0,0,0,0] : location.state.detail
-  // setting state for array that will hold values for game in progress
+  const loadScore = location.state === undefined ? 0 : location.state.score
 
   const backToMain = () => {
     history.push({
         pathname: '/',
-        state: { detail: loadValue }
+        state: { 
+          detail: loadValue,
+          score: loadScore
+       }
     })
 }
 

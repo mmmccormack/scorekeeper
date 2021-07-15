@@ -12,12 +12,13 @@ export default function Scorekeeper() {
     const columnNumber = 10;
     const [rowNumber, setRowNumber] = useState(1);
     const [teamRoster, setTeamRoster] = useState([]);
-    const [gameRuns, setGameRuns] = useState(0);
+    const [gameRuns, setGameRuns] = useState(location.state.score);
 
     const backToMain = () => {
         history.push({
             pathname: '/',
-            state: { detail: array }
+            state: { detail: array,
+            score: gameRuns }
         })
     }
 
