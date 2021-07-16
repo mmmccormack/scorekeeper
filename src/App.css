@@ -134,6 +134,10 @@ ul {
     font-size: 0.7rem;
 }
 
+.alertModal {
+    text-align: center; 
+}
+
 .modalGrid {
     display: grid;
     grid-template-columns: 1fr;

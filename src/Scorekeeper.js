@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { useLocation, useHistory } from "react-router-dom";
+import { Modal, Button } from 'react-bootstrap';
 import firebase from './firebase';
 import smallDiamond from './assets/smallDiamond.svg';
 import ScoringModal from './ScoringModal';
@@ -25,8 +26,11 @@ export default function Scorekeeper() {
 
     // modal functionality
     const [show, setShow] = useState(false);
+    const [alertShow, setAlertShow] = useState(false);
     const handleClose = () => setShow(false);
     const handleShow = () => setShow(true);
+    const handleAlertShow = () => setAlertShow(true);
+    const handleAlertClose = () => setAlertShow(false);
     
     // modal states
     const [frame, setFrame] = useState(0);
@@ -82,7 +86,11 @@ export default function Scorekeeper() {
         const batterValue = Math.floor(index / 10) * 10;
         setFrame(index);
         setBatter(array[batterValue]);
-        handleShow();
+        if (batter === "playerName" || 0) {
+            handleAlertShow();
+        } else {
+            handleShow();
+        }
     }
 
     const changeBatter = (batterName, arrayIndex) => {
@@ -93,6 +101,12 @@ export default function Scorekeeper() {
 
     return (
         <>
+        <Modal show={alertShow} onHide={handleAlertClose} className="alertModal">
+            Please choose a player.
+            <Button variant="primary mx-auto w-50" onClick={handleAlertClose}>
+                Close
+            </Button>
+        </Modal>
             <ScoringModal
                 frame={frame}
                 batter={batter}
@@ -140,6 +154,9 @@ export default function Scorekeeper() {
                                 key={index}
                                 onChange={ (e) => changeBatter(e.target.value,index) }
                                 >
+                                <option value="playerName">
+                                    Select
+                                </option>
                                     {
                                         teamRoster.map( (player, index) => {
                                             return(
