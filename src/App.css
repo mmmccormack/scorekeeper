@@ -121,7 +121,11 @@ ul {
 }
 .otherTeam { 
     grid-area: 1 / 4 / 3 / 5; 
-} 
+}
+
+.innings {
+    text-align: center;
+}
 
 .scoreFrame {
     border: 2px solid black;
