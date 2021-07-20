@@ -10,6 +10,7 @@ export default function Scorekeeper() {
     const location = useLocation();
     const history = useHistory();
     const [array, setArray] = useState(location.state.detail);
+    const [colors, setColors] = useState([]);
     const columnNumber = 10;
     const [rowNumber, setRowNumber] = useState(1);
     const [teamRoster, setTeamRoster] = useState([]);
@@ -59,6 +60,19 @@ export default function Scorekeeper() {
         }
     }, [])
 
+    useEffect(() => {
+        const colorCopy = [];
+        for (let i = 0; i < array.length; i++) {
+            const value = array[i].toString();
+            if (value.indexOf("T") === - 1) {
+                colorCopy.push("btn btn-success w-100 p-0");
+            } else {
+                colorCopy.push("btn btn-danger w-100 p-0");
+            }
+            setColors(colorCopy);
+        }
+    }, [array])
+
     const gridObj = {
         display: `grid`,
         gridTemplateColumns: `repeat(${columnNumber}, 1fr)`,
@@ -99,6 +113,16 @@ export default function Scorekeeper() {
         setArray(arrayCopy);
     }
 
+    const innings = [];
+
+    for (let i = 0; i < 10; i++) {
+        if (i === 0) {
+            innings.push("Player")
+        } else {
+            innings.push(i);
+        }
+    }
+
     return (
         <>
         <Modal show={alertShow} onHide={handleAlertClose} className="alertModal">
@@ -135,6 +159,13 @@ export default function Scorekeeper() {
             <div 
             style={gridObj}
             >
+                {
+                    innings.map( (inning, index) => {
+                        return(
+                            <div className="innings" key={index}>{inning}</div>
+                        )
+                    })
+                }   
                 {
                     array.map( (frame, index) => {
                         const cellValue =
@@ -177,7 +208,7 @@ export default function Scorekeeper() {
                                     backgroundImage: `url(${smallDiamond})`, 
                                     backgroundRepeat: `no-repeat`,
                                     backgroundPosition: `center`}}
-                                className="btn btn-success w-100 p-0" 
+                                className={colors[index]} 
                                 onClick={() => showCell(index)}
                                 >
                                 {cellValue}
