@@ -1,5 +1,9 @@
 .srOnly { position: absolute; width: 1px; height: 1px; margin: -1px; border: 0; padding: 0; white-space: nowrap; clip-path: inset(100%); clip: rect(0 0 0 0); overflow: hidden;}
 
+h1, h2 {
+    text-align: center;
+}
+
 img {
     max-width: 100%;
 }
@@ -138,8 +142,13 @@ ul {
     font-size: 0.7rem;
 }
 
-.alertModal {
-    text-align: center; 
+.modal-dialog {
+    top: 20%;
+}
+
+.modal-content {
+    align-items: center;
+    justify-content: center;
 }
 
 .modalGrid {

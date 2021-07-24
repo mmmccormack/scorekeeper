@@ -93,16 +93,14 @@ export default function Scorekeeper() {
         setArray(arrayCopy);
     };
 
-    // when score frame is clicked:
-    // - get array index
-    // - get player name
     const showCell = index => {
         const batterValue = Math.floor(index / 10) * 10;
+        const batterName = array[batterValue]
         setFrame(index);
-        setBatter(array[batterValue]);
-        if (batter === "playerName" || 0) {
+        if (batterName === "playerName" || 0) {
             handleAlertShow();
         } else {
+            setBatter(array[batterValue]);
             handleShow();
         }
     }
@@ -125,7 +123,7 @@ export default function Scorekeeper() {
 
     return (
         <>
-        <Modal show={alertShow} onHide={handleAlertClose} className="alertModal">
+        <Modal show={alertShow} onHide={handleAlertClose} className="modal modal-lg">
             Please choose a player.
             <Button variant="primary mx-auto w-50" onClick={handleAlertClose}>
                 Close
