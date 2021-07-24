@@ -30,6 +30,8 @@ export default function Login() {
     return (
         <>
          <Card>
+         <h1>Scoreekeepage!</h1>
+         <h2>Keep track of score in your softball game, and track your team's stats!</h2>
              <Card.Body>
                  <h2 className="text-center mb-4">Log In</h2>
                  {error && <Alert variant="danger">{error}</Alert>}

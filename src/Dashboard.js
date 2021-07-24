@@ -138,7 +138,7 @@ export default function Dashboard() {
         </Modal>
             <Card>
                 <Card.Body>
-                    <h2 className="text-center mb-4">Profile</h2>
+                    <h2 className="text-center mb-4">Team Dashboard</h2>
                     <strong>Email:</strong> {currentUser.email}
                     <Link to="/update-profile" className="btn btn-info w-100 mt-3">Update Info</Link>
                     <Form>
