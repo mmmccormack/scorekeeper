@@ -64,10 +64,10 @@ export default function Scorekeeper() {
         const colorCopy = [];
         for (let i = 0; i < array.length; i++) {
             const value = array[i].toString();
-            if (value.indexOf("T") === - 1) {
-                colorCopy.push("btn btn-success w-100 p-0");
-            } else {
+            if (value.indexOf("OUT") !== - 1 || value.indexOf("SO") !== - 1 || value.indexOf("SAC") !== - 1) {
                 colorCopy.push("btn btn-danger w-100 p-0");
+            } else {
+                colorCopy.push("btn btn-success w-100 p-0");
             }
             setColors(colorCopy);
         }
