@@ -200,7 +200,7 @@ export default function ScoringModal({
                     BB
                 </Button>
                 <Button variant="primary m-1" onClick={() => setResult("SAC")}>
-                    SAC
+                    SAC/FC
                 </Button>
                 <Button variant="primary m-1" onClick={() => setResult("SO")}>
                     SO
